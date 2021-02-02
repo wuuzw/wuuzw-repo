@@ -1,0 +1,20 @@
+<addon id="service.subtitles.yifysubs" name="Yify Subtitles" version="0.0.1" provider-name="wuuzw">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.6.2"/>
+        <import addon="script.module.requests" version="2.22.0"/>
+    </requires>
+    <extension point="xbmc.subtitle.module" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Yify Subtitles</summary>
+        <description lang="en">Search and download subtitles from yifysubtitles.org</description>
+        <disclaimer>This addon is not affiliated with yifysubtitles.org</disclaimer>
+        <license>MIT</license>
+        <source>http://github.com/wuuzw/wuuzw-repo</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <clearlogo>resources/logo.png</clearlogo>
+        </assets>
+    </extension>
+</addon>

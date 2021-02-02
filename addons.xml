@@ -1,0 +1,33 @@
+<addons>
+  <addon id="repository.wuuzw" name="wuuzw's repo" version="0.0.1" provider-name="wuuzw">
+    <extension point="xbmc.addon.repository" name="wuuzw's repo">
+        <info>https://github.com/wuuzw/wuuzw-repo/raw/main/addons.xml</info>
+        <checksum>https://github.com/wuuzw/wuuzw-repo/raw/main/addons.xml.md5</checksum>
+        <datadir zip="true">https://github.com/wuuzw/wuuzw-repo/raw/main/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>wuuzw's repo</summary>
+        <description>Download and install add-ons from wuuzw's repository.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+<addon id="service.subtitles.yifysubs" name="Yify Subtitles" version="0.0.1" provider-name="wuuzw">
+    <requires>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.6.2"/>
+        <import addon="script.module.requests" version="2.22.0"/>
+    </requires>
+    <extension point="xbmc.subtitle.module" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Yify Subtitles</summary>
+        <description lang="en">Search and download subtitles from yifysubtitles.org</description>
+        <disclaimer>This addon is not affiliated with yifysubtitles.org</disclaimer>
+        <license>MIT</license>
+        <source>http://github.com/wuuzw/wuuzw-repo</source>
+        <assets>
+            <icon>resources/icon.png</icon>
+            <clearlogo>resources/logo.png</clearlogo>
+        </assets>
+    </extension>
+</addon></addons>

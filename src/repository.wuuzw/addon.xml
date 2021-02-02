@@ -1,0 +1,12 @@
+<addon id="repository.wuuzw" name="wuuzw's repo" version="0.0.1" provider-name="wuuzw">
+    <extension point="xbmc.addon.repository" name="wuuzw's repo">
+        <info>https://github.com/wuuzw/wuuzw-repo/raw/main/addons.xml</info>
+        <checksum>https://github.com/wuuzw/wuuzw-repo/raw/main/addons.xml.md5</checksum>
+        <datadir zip="true">https://github.com/wuuzw/wuuzw-repo/raw/main/repo</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>wuuzw's repo</summary>
+        <description>Download and install add-ons from wuuzw's repository.</description>
+        <platform>all</platform>
+    </extension>
+</addon>
