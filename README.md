@@ -41,10 +41,11 @@ Install [Kodi 19][Kodi]
 
 * Yify Subtitles - service.subtitles.yifysubs - Search and download subtitles from [Yify Subtitles]
 
-
-If for reasons that you need to manually install a specific plugin, you can download the required zip file from the corresponding ./repo sub-directory. Then follow the ** Install Repository ** steps described above to install the zip plugin.
+## License
+[MIT License]
 
 [Yify Subtitles]: https://yifysubtitles.org
 [Kodi]: https://kodi.tv/
 [repository.wuuzw.zip]: https://github.com/wuuzw/wuuzw-repo/raw/main/repo/repository.wuuzw/repository.wuuzw-0.0.1.zip
 [repo]: repo/
+[MIT License]: LICENSE
