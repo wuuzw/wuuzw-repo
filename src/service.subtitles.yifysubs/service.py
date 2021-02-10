@@ -35,12 +35,10 @@ def log(module: str, msg: str):
     xbmc.log(f"{__scriptname__}::{module} - {msg}", level=xbmc.LOGINFO)
 
 
-def search(video: dict):
-    log(search.__name__, f"Searching subtitle for: {video}")
-
+def search(video: dict, languages: list):
     url = f"{SUBTITLES_URL}/{video['imdb']}"
 
-    log(search.__name__, f"subtitle url: {url}")
+    log(search.__name__, f"Subtitle url: {url}")
     data = session.get(url).text
     try:
         soup = BeautifulSoup(data, "html.parser")
@@ -54,21 +52,23 @@ def search(video: dict):
     for row in rows:
         cells = row.findAll("td")
 
-        filename = cells[2].find('a')
-        filename.find('span').extract()
+        language = cells[1].find('span', {'class': 'sub-lang'}, text=True).get_text().split(' ')[0]
 
-        subtitle = {
-            'language': cells[1].find('span', {'class': 'sub-lang'}, text=True).get_text().split(' ')[0],
-            'flag': cells[1].find('span', {'class': 'flag'})['class'][1].replace('flag-', ''),
-            'filename': filename.get_text('|', strip=True),
-            'link': f"{BASE_URL}{(cells[2].find('a', href=True)['href']).replace('subtitles', 'subtitle')}.zip"
-        }
+        if any(language.lower() in s.lower() for s in languages):
+            filename = cells[2].find('a')
+            filename.find('span').extract()
+            subtitle = {
+                'language': language,
+                'flag': cells[1].find('span', {'class': 'flag'})['class'][1].replace('flag-', ''),
+                'filename': filename.get_text('|', strip=True),
+                'link': f"{BASE_URL}{(cells[2].find('a', href=True)['href']).replace('subtitles', 'subtitle')}.zip"
+            }
 
-        list_item = xbmcgui.ListItem(label=subtitle['language'], label2=subtitle['filename'])
-        list_item.setArt({'thumb': subtitle['flag']})
+            list_item = xbmcgui.ListItem(label=subtitle['language'], label2=subtitle['filename'])
+            list_item.setArt({'thumb': subtitle['flag']})
 
-        url = f"plugin://{__scriptid__}/?action=download&link={subtitle['link']}"
-        xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=list_item, isFolder=False)
+            url = f"plugin://{__scriptid__}/?action=download&link={subtitle['link']}"
+            xbmcplugin.addDirectoryItem(handle=HANDLE, url=url, listitem=list_item, isFolder=False)
 
 
 def download(url: str):
@@ -103,7 +103,7 @@ def download(url: str):
             subtitle_list.append(os.path.join(archive_path, file_list[0]).replace('\\', '/'))
 
         if len(file_list) > 1:
-            sel = xbmcgui.Dialog().select(heading='请选择压缩包中的字幕', list=file_list, preselect=0)
+            sel = xbmcgui.Dialog().select(heading='Select 1 subtitle', list=file_list, preselect=0)
             subtitle_list.append(os.path.join(archive_path, file_list[sel]).replace('\\', '/'))
     else:
         xbmc.executebuiltin(f'Notification({__scriptname__}, {"Unsupported file"})')
@@ -137,7 +137,7 @@ def parse_argv(argv: list) -> dict:
             .replace('original',
                      xbmc.convertLanguage(xbmc.getInfoLabel("VideoPlayer.AudioLanguage"), xbmc.ENGLISH_NAME)) \
             .replace('default',
-                     xbmc.convertLanguage(xbmc.getInfoLabel("System.Language"), xbmc.ENGLISH_NAME))
+                     xbmc.convertLanguage(xbmc.getInfoLabel("System.Language"), xbmc.ENGLISH_NAME)).split(',')
 
     log(parse_argv.__name__, f"Parsed arguments: {param}")
     return param
@@ -160,7 +160,7 @@ def main():
 
     video: dict = get_video_info()
     if params['action'] == 'search':
-        search(video)
+        search(video, params['languages'])
 
     if params['action'] == 'download':
         subs = download(params["link"])

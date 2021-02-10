@@ -11,7 +11,7 @@
         <platform>all</platform>
     </extension>
 </addon>
-<addon id="service.subtitles.yifysubs" name="Yify Subtitles" version="0.0.1" provider-name="wuuzw">
+<addon id="service.subtitles.yifysubs" name="Yify Subtitles" version="0.0.2" provider-name="wuuzw">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.beautifulsoup4" version="4.6.2"/>
